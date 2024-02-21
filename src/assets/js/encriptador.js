@@ -16,7 +16,7 @@ textoDeEntrada.addEventListener("input", function() {
 });
 
 //funcion encargada de encriptar el texto
-function txtEncriptar(){
+function btnEncriptar(){
     //variable que se le va asignar el nuevo texto encriptado
     let nuevoTexto = "";
     //obtengo el texto que se va a encriptar
@@ -35,7 +35,7 @@ function txtEncriptar(){
     document.getElementById("txtSalida").value = nuevoTexto;
 }
 
-function txtDesencriptar(){
+function btnDesencriptar(){
     let txtEncriptado = document.getElementById("txtEntrada").value;
     //array para el texto desencriptado
     let nuevoTexto = [];
@@ -82,3 +82,17 @@ function traductorTexto(texto, accion){
 
     return textoTraducido;
 }
+
+//al boton de copiar le agrego el evento click
+//a la variable copiarSalida le asigno lo que contiene el textarea
+//luego selecciono lo que esta en el textarea
+//posteriormente ejecuto el comando copiar
+document.querySelector('.copiar').addEventListener('click', () => {
+    let copiarSalida = document.getElementById('txtSalida');
+
+    copiarSalida.select();
+    document.execCommand('copy');
+
+    document.getElementById('txtEntrada').value = "";
+    document.getElementById('txtSalida').value = "";
+});

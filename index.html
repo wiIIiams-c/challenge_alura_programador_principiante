@@ -8,15 +8,30 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap"
             rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="src/assets/css/style.css">
         <title>Encriptador - Desencriptador de Texto | Desafio Alura</title>
     </head>
-    <body class="body">
-        <textarea id="txtEntrada"></textarea>
-        <textarea id="txtSalida"></textarea>
-        <button id="encriptar" onclick="txtEncriptar();">Encriptar</button>
-        <button id="encriptar" onclick="txtDesencriptar();">Desencriptar</button>
-        
-        <script src="encriptador.js"></script>
+    <body>
+        <main>
+            <section>
+                <textarea id="txtEntrada" class="textoEntrada" placeholder="Ingrese texto" required></textarea>
+    
+                <h6 class="advertencia">
+                    <img src="src/images/img-exclamacion-circulo.png">
+                    Solo letras minusculas y sin acentos
+                </h6>
+    
+                <div id="botoneras">
+                    <button class="encriptar" onclick="btnEncriptar();">Encriptar</button>
+                    <button class="desencriptar" onclick="btnDesencriptar();"><span>Desencriptar</span></button>
+                </div>
+            </section>
+    
+            <section>
+                <textarea id="txtSalida" class="textoSalida" readonly></textarea>
+                <button class="copiar">Copiar</button>
+            </section>
+        </main>
+        <script src="src/assets/js/encriptador.js"></script>
     </body>
 </html>
