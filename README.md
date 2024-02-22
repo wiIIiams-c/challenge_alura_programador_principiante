@@ -4,5 +4,5 @@ Ref Challenge: https://www.aluracursos.com/challenges/challenge-one-logica/sprin
 
 # Actualmente esto se encuentra alojado en Github pages y Azure Static Web App
 El codigo de este challenge se actualiza automaticamente via Github Actions y Azure <br />
-URL Github pages: https://github.com/wiIIiams-c/challenge_alura_programador_principiante <br />
+URL Github pages: https://wiiiiams-c.github.io/challenge_alura_programador_principiante <br />
 URL Azure: https://proud-glacier-033dd7310.4.azurestaticapps.net
