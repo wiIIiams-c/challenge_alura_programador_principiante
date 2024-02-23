@@ -1,16 +1,13 @@
-//Debe funcionar solo con letras minúsculas OK
-//No deben ser utilizados letras con acentos ni caracteres especiales
-//Debe ser posible convertir una palabra para la versión encriptada también devolver una palabra encriptada para su versión original.
-
 //declaro un array con las letras a encriptar para verificar y saltar las que no
-let letrasEncriptar = ["a", "e", "i", "o", "u"];
-let letrasDesencriptar = ["ai", "enter", "imes", "ober", "ufat"];
+const letrasEncriptar = ["a", "e", "i", "o", "u"];
+const letrasDesencriptar = ["ai", "enter", "imes", "ober", "ufat"];
+const regexpAcentos = /^[a-z0-9\s]+$/;
 
 //se convierte a minusculas lo que esta en el texto a encriptar
 //selecciono el textarea mediante su ID
 let textoDeEntrada = document.getElementById("txtEntrada");
 //luego a ese textarea le asigno el evento input que hace que cualquier
-//cosa que escriba lo trasnforma a minuscula
+//cosa que escriba lo transforma a minuscula
 textoDeEntrada.addEventListener("input", function() {
     this.value = this.value.toLowerCase();
 });
@@ -22,17 +19,25 @@ function btnEncriptar(){
     //obtengo el texto que se va a encriptar
     let txtNoEncriptado = document.getElementById("txtEntrada").value;
 
-    //recorro letra por letra para poder encriptar
-    for (let index = 0; index < txtNoEncriptado.length; index++) {
-        //asigno la letra de acuerdo a su indice
-        let letra = txtNoEncriptado[index];
-        //asigno y concateno la letra al texto nuevo
-        //dentro del concat verifica si la letra es parte del arreglo para saber si encriptarla o no
-        nuevoTexto = nuevoTexto.concat(letrasEncriptar.includes(letra)?traductorTexto(letra, "encriptar"):letra);
-    }
+    if(!regexpAcentos.test(txtNoEncriptado)){
+        alert("El texto ingresado no puede contener acentos o caracteres especiales!");
+    }else{
+        //recorro letra por letra para poder encriptar
+        for (let index = 0; index < txtNoEncriptado.length; index++) {
+            //asigno la letra de acuerdo a su indice
+            let letra = txtNoEncriptado[index];
+            //asigno y concateno la letra al texto nuevo
+            //dentro del concat verifica si la letra es parte del arreglo para saber si encriptarla o no
+            nuevoTexto = nuevoTexto.concat(letrasEncriptar.includes(letra)?traductorTexto(letra, "encriptar"):letra);
+        }
+        
+        //asigno de salida el texto encriptado
+        let textoSalida = document.getElementById("txtSalida");
+        textoSalida.value = nuevoTexto;
+        textoSalida.style.backgroundImage = "none";
     
-    //asigno de salida el texto encriptado
-    document.getElementById("txtSalida").value = nuevoTexto;
+        document.getElementById("btnCopiar").style.display = "block";
+    }
 }
 
 function btnDesencriptar(){
