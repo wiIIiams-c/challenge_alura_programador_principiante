@@ -1,7 +1,6 @@
 //declaro un array con las letras a encriptar para verificar y saltar las que no
 const letrasEncriptar = ["a", "e", "i", "o", "u"];
 const letrasDesencriptar = ["ai", "enter", "imes", "ober", "ufat"];
-const regexpAcentos = /^[a-z0-9\s]+$/;
 
 //se convierte a minusculas lo que esta en el texto a encriptar
 //selecciono el textarea mediante su ID
@@ -18,8 +17,8 @@ function btnEncriptar(){
     let nuevoTexto = "";
     //obtengo el texto que se va a encriptar
     let txtNoEncriptado = document.getElementById("txtEntrada").value;
-
-    if(!regexpAcentos.test(txtNoEncriptado)){
+    
+    if(!validaCaracterEspacial(txtNoEncriptado)){
         alert("El texto ingresado no puede contener acentos o caracteres especiales!");
     }else{
         //recorro letra por letra para poder encriptar
@@ -35,7 +34,7 @@ function btnEncriptar(){
         let textoSalida = document.getElementById("txtSalida");
         textoSalida.value = nuevoTexto;
         textoSalida.style.backgroundImage = "none";
-    
+        
         document.getElementById("btnCopiar").style.display = "block";
     }
 }
@@ -49,23 +48,39 @@ function btnDesencriptar(){
     //separar cada palabra y guardarlo en array para verificar
     textoPorPartes = txtEncriptado.split(" ");
 
-    textoPorPartes.forEach(elementMain => {
-        let coincidencias = [];
-        let nuevaPalabra = elementMain;
-        let letrasDesencriptarJoin = letrasDesencriptar.join("|");
-        let expresionRegular = new RegExp(letrasDesencriptarJoin, "g");
-        
-        coincidencias = [...elementMain.matchAll(expresionRegular)];
-        coincidencias.forEach(elementSub => {
-            nuevaPalabra = nuevaPalabra.replace(elementSub[0], traductorTexto(elementSub[0], "desencriptar"))
+    if(!validaCaracterEspacial(txtEncriptado)){
+        alert("El texto ingresado no puede contener acentos o caracteres especiales!");
+    }else{
+        textoPorPartes.forEach(elementMain => {
+            let coincidencias = [];
+            let nuevaPalabra = elementMain;
+            let letrasDesencriptarJoin = letrasDesencriptar.join("|");
+            let expresionRegular = new RegExp(letrasDesencriptarJoin, "g");
+            
+            coincidencias = [...elementMain.matchAll(expresionRegular)];
+            coincidencias.forEach(elementSub => {
+                nuevaPalabra = nuevaPalabra.replace(elementSub[0], traductorTexto(elementSub[0], "desencriptar"))
+            });
+            
+            //agrego la palabra desencriptada a un nuevo array
+            nuevoTexto.push(nuevaPalabra);
         });
 
-        //agrego la palabra desencriptada a un nuevo array
-        nuevoTexto.push(nuevaPalabra);
-    });
+        //al texto de salida le asigno el texto desencriptado separado por espacios
+        document.getElementById("txtSalida").value = nuevoTexto.join(" ");
+        document.getElementById("txtSalida").style.backgroundImage = "none";
+        
+        document.getElementById("btnCopiar").style.display = "block";
+    }
+}
+
+function validaCaracterEspacial(texto){
+    const regexpAcentos = /^[a-z0-9\s]+$/;
     
-    //al texto de salida le asigno el texto desencriptado separado por espacios
-    document.getElementById("txtSalida").value = nuevoTexto.join(" ");
+    if(regexpAcentos.test(texto))
+        return true;
+
+    return false;
 }
 
 //funcion encargada de encriptar o desencriptar el texto
@@ -100,4 +115,8 @@ document.querySelector('.copiar').addEventListener('click', () => {
 
     document.getElementById('txtEntrada').value = "";
     document.getElementById('txtSalida').value = "";
+    document.getElementById("btnCopiar").style.display = "none";
+
+    alert('El texto ha sido copiado!');
+
 });
